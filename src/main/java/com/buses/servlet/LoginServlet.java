@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
                     resp.sendRedirect(req.getContextPath() + "/admin/sucursales");
                     break;
                 case "ADMIN_SUCURSAL":
-                    resp.sendRedirect(req.getContextPath() + "/sucursal/inicio");
+                    resp.sendRedirect(req.getContextPath() + "/sucursal/buses");
                     break;
                 default:
                     resp.sendRedirect(req.getContextPath() + "/cliente/inicio");

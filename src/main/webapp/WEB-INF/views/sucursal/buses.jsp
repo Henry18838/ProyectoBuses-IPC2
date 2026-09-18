@@ -12,6 +12,7 @@
     <span class="navbar-brand">Sistema de Buses — Administrador de Sucursal</span>
     <div>
         <a href="${pageContext.request.contextPath}/sucursal/choferes" class="btn btn-outline-light btn-sm">Choferes</a>
+        <a href="${pageContext.request.contextPath}/sucursal/rutas" class="btn btn-outline-light btn-sm">Rutas</a>
         <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-light btn-sm">Cerrar sesión</a>
     </div>
 </nav>

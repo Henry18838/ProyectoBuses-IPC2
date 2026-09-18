@@ -13,6 +13,7 @@
     <div>
         <a href="${pageContext.request.contextPath}/sucursal/buses" class="btn btn-outline-light btn-sm">Buses</a>
         <a href="${pageContext.request.contextPath}/sucursal/choferes" class="btn btn-outline-light btn-sm">Choferes</a>
+        <a href="${pageContext.request.contextPath}/sucursal/viajes" class="btn btn-outline-light btn-sm">Viajes</a>
         <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-light btn-sm">Cerrar sesión</a>
     </div>
 </nav>

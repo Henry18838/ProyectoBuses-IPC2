@@ -25,6 +25,9 @@ public class Viaje {
     private LocalDateTime fechaHoraSalidaProg;
     private LocalDateTime fechaHoraLlegadaProg;
 
+    private boolean tieneSalida;
+    private boolean tieneLlegada;
+
     public Viaje() {
     }
 
@@ -72,4 +75,10 @@ public class Viaje {
 
     public LocalDateTime getFechaHoraLlegadaProg() { return fechaHoraLlegadaProg; }
     public void setFechaHoraLlegadaProg(LocalDateTime fechaHoraLlegadaProg) { this.fechaHoraLlegadaProg = fechaHoraLlegadaProg; }
+
+    public boolean isTieneSalida() { return tieneSalida; }
+    public void setTieneSalida(boolean tieneSalida) { this.tieneSalida = tieneSalida; }
+
+    public boolean isTieneLlegada() { return tieneLlegada; }
+    public void setTieneLlegada(boolean tieneLlegada) { this.tieneLlegada = tieneLlegada; }
 }

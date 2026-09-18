@@ -144,9 +144,22 @@
                 <td>${v.fechaHoraLlegadaProg}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/sucursal/viajes?accion=editar&id=${v.id}" class="btn btn-sm btn-warning">Editar</a>
-                    <a href="${pageContext.request.contextPath}/sucursal/viajes?accion=eliminar&id=${v.id}"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('¿Eliminar este viaje?');">Eliminar</a>
+                    <c:choose>
+                        <c:when test="${v.tieneLlegada}">
+                            <span class="badge bg-success">Completado</span>
+                        </c:when>
+                        <c:when test="${v.tieneSalida}">
+                            <a href="${pageContext.request.contextPath}/sucursal/registro-viaje?viajeId=${v.id}&tipo=llegada" class="btn btn-sm btn-info">Registrar llegada</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/sucursal/registro-viaje?viajeId=${v.id}&tipo=salida" class="btn btn-sm btn-secondary">Registrar salida</a>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:if test="${!v.tieneSalida}">
+                        <a href="${pageContext.request.contextPath}/sucursal/viajes?accion=eliminar&id=${v.id}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('¿Eliminar este viaje?');">Eliminar</a>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

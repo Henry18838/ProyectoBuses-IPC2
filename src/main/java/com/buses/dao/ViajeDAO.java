@@ -11,7 +11,9 @@ public class ViajeDAO {
 
     private static final String SELECT_BASE =
         "SELECT v.*, b.num_placa, c.nombre_completo AS chofer_nombre, " +
-        "       CONCAT(so.nombre, ' -> ', sd.nombre) AS ruta_desc " +
+        "       CONCAT(so.nombre, ' -> ', sd.nombre) AS ruta_desc, " +
+        "       (SELECT COUNT(*) FROM registro_salida rs WHERE rs.viaje_id = v.id) AS tiene_salida, " +
+        "       (SELECT COUNT(*) FROM registro_llegada rl WHERE rl.viaje_id = v.id) AS tiene_llegada " +
         "FROM viaje v " +
         "JOIN bus b ON v.bus_id = b.id " +
         "JOIN chofer c ON v.chofer_id = c.id " +
@@ -44,10 +46,16 @@ public class ViajeDAO {
         return null;
     }
 
-    /** Indica si el viaje ya tiene registro de salida (para bloquear edicion de tipo / eliminacion).
-     *  La tabla registro_salida se crea en el siguiente incremento -- por ahora retorna false. */
+    /** Indica si el viaje ya tiene registro de salida (para bloquear edicion de tipo / eliminacion). */
     public boolean tieneRegistroSalida(int viajeId) throws SQLException {
-        return false; // TODO: consultar tabla registro_salida cuando exista
+        String sql = "SELECT 1 FROM registro_salida WHERE viaje_id = ?";
+        try (Connection con = ConexionDB.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, viajeId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
     }
 
     /** Indica si el viaje ya fue pagado (boleto vendido o alquiler pagado).
@@ -143,6 +151,8 @@ public class ViajeDAO {
         v.setFechaHoraSalidaProg(salida != null ? salida.toLocalDateTime() : null);
         Timestamp llegada = rs.getTimestamp("fecha_hora_llegada_prog");
         v.setFechaHoraLlegadaProg(llegada != null ? llegada.toLocalDateTime() : null);
+        v.setTieneSalida(rs.getInt("tiene_salida") > 0);
+        v.setTieneLlegada(rs.getInt("tiene_llegada") > 0);
         return v;
     }
 }

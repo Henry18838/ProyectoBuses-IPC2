@@ -44,11 +44,17 @@ public class RutaDAO {
         return null;
     }
 
-    /** Cuenta viajes asociados a una ruta (para permitir o no eliminarla).
-     *  La tabla 'viaje' aun no existe, asi que retorna 0 -- se completa
-     *  cuando se implemente el modulo de viajes. */
+    /** Cuenta viajes asociados a una ruta (para permitir o no eliminarla). */
     public int contarViajesAsociados(int rutaId) throws SQLException {
-        return 0; // TODO: reemplazar cuando exista la tabla 'viaje'
+        String sql = "SELECT COUNT(*) FROM viaje WHERE ruta_id = ?";
+        try (Connection con = ConexionDB.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, rutaId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        }
+        return 0;
     }
 
     public int crear(Ruta r) throws SQLException {

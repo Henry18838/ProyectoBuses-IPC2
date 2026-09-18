@@ -51,11 +51,20 @@ public class BusDAO {
         return null;
     }
 
-    /** Cuenta cuantos viajes tiene programados o en transito un bus (para poder desactivarlo).
-     *  Por ahora la tabla viaje no existe todavia, asi que retorna 0 -- se completa cuando
-     *  se implemente el modulo de viajes. */
+    /** Cuenta cuantos viajes de este bus aun no tienen registro de llegada
+     *  (es decir, siguen programados o en transito) -- para poder desactivarlo. */
     public int contarViajesActivos(int busId) throws SQLException {
-        return 0; // TODO: reemplazar cuando exista la tabla 'viaje'
+        String sql = "SELECT COUNT(*) FROM viaje v " +
+                     "LEFT JOIN registro_llegada rl ON v.id = rl.viaje_id " +
+                     "WHERE v.bus_id = ? AND rl.id IS NULL";
+        try (Connection con = ConexionDB.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, busId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        }
+        return 0;
     }
 
     public int crear(Bus b) throws SQLException {

@@ -10,7 +10,10 @@
 <body>
 <nav class="navbar navbar-dark bg-dark px-3">
     <span class="navbar-brand">Sistema de Buses — Administrador de Sucursal</span>
-    <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-light btn-sm">Cerrar sesión</a>
+    <div>
+        <a href="${pageContext.request.contextPath}/sucursal/choferes" class="btn btn-outline-light btn-sm">Choferes</a>
+        <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-light btn-sm">Cerrar sesión</a>
+    </div>
 </nav>
 
 <div class="container mt-4">
